@@ -1,9 +1,9 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Register from "../views/Register.vue";
-import Login from "../views/Login.vue";
-import Index from "../views/Index.vue";
-import NotFound from "../views/404.vue";
+import Register from "views/Register.vue";
+import Login from "views/Login.vue";
+import Index from "views/Index.vue";
+import NotFound from "views/404.vue";
 
 Vue.use(VueRouter);
 
