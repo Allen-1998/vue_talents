@@ -1,15 +1,9 @@
 //用户路由
 const express = require("express");
-const md5 = require("blueimp-md5");
 const jwt = require("jsonwebtoken");
 const User = require("../model/User");
-const { secret } = require("../config/key");
+const { secret, code } = require("../config/key");
 const router = express.Router();
-
-//定义md5三重加密方法
-code = (val) => {
-  return md5(md5(val) + "ice");
-};
 
 //验证身份中间件
 const rank = async (req, res, next) => {
@@ -20,17 +14,17 @@ const rank = async (req, res, next) => {
     //查询用户是否存在
     const user = await User.findById(_id);
     if (!user)
-      return res.json({
+      return res.status(422).json({
         status: 422,
         message: "token验证失败！",
       });
     if (username !== user.username)
-      return res.json({
+      return res.status(422).json({
         status: 422,
         message: "token验证失败！",
       });
     if (user.rank !== 1)
-      return res.json({
+      return res.status(409).json({
         status: 409,
         message: "没有权限！",
       });
@@ -56,7 +50,7 @@ router.post("/register", async (req, res, next) => {
     //查询用户名是否已经存在
     const user = await User.findOne({ username: req.body.username });
     if (user)
-      return res.json({
+      return res.status(409).json({
         status: 409,
         message: "该用户已存在！",
       });
@@ -78,13 +72,13 @@ router.post("/login", async (req, res, next) => {
     //查询用户是否存在
     const user = await User.findOne({ username: req.body.username });
     if (!user)
-      return res.json({
+      return res.status(422).json({
         status: 422,
         message: "用户不存在！",
       });
     //验证密码
     if (code(req.body.password) !== user.password)
-      return res.json({
+      return res.status(422).json({
         status: 422,
         message: "密码错误！",
       });

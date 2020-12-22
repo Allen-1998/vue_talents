@@ -17,7 +17,7 @@ routers(app);
 
 //处理错误请求
 app.use((err, req, res, next) => {
-  return res.json({
+  return res.status(500).json({
     status: 500,
     message: "服务器错误，请稍后再试！",
   });
