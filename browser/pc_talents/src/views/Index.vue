@@ -5,7 +5,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  async beforeMount() {
+    const { data: res } = await this.$http.get("user/list");
+    if (!res) return;
+    console.log(res.data);
+  },
+};
 </script>
 
 <style lang="less" scoped></style>

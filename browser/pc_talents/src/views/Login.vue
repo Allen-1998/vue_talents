@@ -66,10 +66,9 @@ export default {
     return {
       loading: false,
       loginForm: {
-        username: "",
-        password: "",
+        username: "test7",
+        password: "Guo123456",
       },
-      rePassword: "",
       loginFormRules: {
         username: [
           {
