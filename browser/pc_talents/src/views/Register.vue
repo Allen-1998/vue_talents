@@ -147,7 +147,7 @@ export default {
           this.addForm
         );
         this.loading = !this.loading;
-        if (res.status !== 200) return this.$message.error(res.message);
+        if (!res) return;
         this.$router.push("/login");
         return this.$message.success(res.message);
       });

@@ -121,7 +121,7 @@ export default {
         );
         this.loading = !this.loading;
         // console.log(res);
-        if (res.status !== 200) return this.$message.error(res.message);
+        if (!res) return;
         this.$router.push("/index");
         window.sessionStorage.setItem("token", res.token);
         return this.$message.success(res.message);

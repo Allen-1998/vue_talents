@@ -14,6 +14,16 @@ axios.interceptors.request.use((config) => {
   return config;
 });
 
+//设置响应拦截
+axios.interceptors.response.use(
+  (res) => {
+    return res;
+  },
+  (err) => {
+    return Vue.prototype.$message.error(err.response.data.message);
+  }
+);
+
 Vue.config.productionTip = false;
 
 new Vue({
