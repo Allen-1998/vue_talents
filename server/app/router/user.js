@@ -4,7 +4,6 @@ const jwt = require("jsonwebtoken");
 const User = require("../model/User");
 const { secret, code } = require("../config/key");
 const role = require("../middlewares/role");
-const status = require("../middlewares/status");
 const router = express.Router();
 
 //获取用户列表
@@ -44,7 +43,7 @@ router.post("/register", async (req, res, next) => {
 });
 
 //登录
-router.post("/login", status, async (req, res, next) => {
+router.post("/login", async (req, res, next) => {
   try {
     //查询用户是否存在
     const user = await User.findOne({ username: req.body.username });
@@ -58,6 +57,12 @@ router.post("/login", status, async (req, res, next) => {
       return res.status(422).json({
         status: 422,
         message: "密码错误！",
+      });
+    //验证用户状态
+    if (user.status !== 1)
+      return res.status(409).json({
+        status: 409,
+        message: "没有登录权限！",
       });
     // 返回token
     const { _id, username } = user;
