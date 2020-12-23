@@ -3,42 +3,19 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const User = require("../model/User");
 const { secret, code } = require("../config/key");
+const role = require("../middlewares/role");
+const status = require("../middlewares/status");
 const router = express.Router();
 
-//验证身份中间件
-const rank = async (req, res, next) => {
-  try {
-    //获取token
-    const token = req.headers.authorization.split(" ").pop();
-    const { _id, username } = jwt.verify(token, secret);
-    //查询用户是否存在
-    const user = await User.findById(_id);
-    if (!user)
-      return res.status(422).json({
-        status: 422,
-        message: "token验证失败！",
-      });
-    if (username !== user.username)
-      return res.status(422).json({
-        status: 422,
-        message: "token验证失败！",
-      });
-    if (user.rank !== 1)
-      return res.status(409).json({
-        status: 409,
-        message: "没有权限！",
-      });
-    return next();
-  } catch (err) {
-    return next(err);
-  }
-};
-
 //获取用户列表
-router.get("/", rank, async (req, res) => {
+router.get("/list", role, async (req, res) => {
   try {
     const list = await User.find();
-    return res.send(list);
+    return res.json({
+      status: 200,
+      message: "查询成功！",
+      data: list,
+    });
   } catch (err) {
     return next(err);
   }
@@ -67,7 +44,7 @@ router.post("/register", async (req, res, next) => {
 });
 
 //登录
-router.post("/login", async (req, res, next) => {
+router.post("/login", status, async (req, res, next) => {
   try {
     //查询用户是否存在
     const user = await User.findOne({ username: req.body.username });

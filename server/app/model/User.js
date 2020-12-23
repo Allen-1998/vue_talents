@@ -11,7 +11,9 @@ const UserSchema = new Schema({
   //昵称
   nickname: { type: String, require: true },
   //身份：1->管理员，2->普通用户
-  rank: { type: Number, default: 2 },
+  role: { type: Number, default: 2 },
+  //状态：1->正常，0->禁用
+  status: { type: Number, default: 1 },
 });
 
 const User = model("User", UserSchema);
