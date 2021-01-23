@@ -5,8 +5,30 @@ function resolve(dir) {
 module.exports = {
   chainWebpack: (config) => {
     //配置路径别名
-    config.resolve.alias.set("assets", resolve("./src/assets"));
-    config.resolve.alias.set("views", resolve("./src/views"));
-    config.resolve.alias.set("components", resolve("./src/components"));
+    config.resolve.alias
+      .set("@", resolve("src"))
+      .set("@css", resolve("src/assets/css"))
+      .set("@img", resolve("src/assets/img"))
+  },
+  //导入全局样式
+  css: {
+    // 是否使用css分离插件 ExtractTextPlugin
+    extract: false,
+    // 开启 CSS source maps?
+    sourceMap: false,
+    // css预设器配置项
+    loaderOptions: {
+      // pass options to sass-loader
+      sass: {
+        // 引入全局变量样式
+        additionalData: `@import "~@css/variable.scss";`,
+      },
+    },
+    // 启用 CSS modules for all css / pre-processor files.
+    requireModuleExtension: true,
+  },
+
+  devServer: {
+    open: true, // 自动开启浏览器
   },
 };

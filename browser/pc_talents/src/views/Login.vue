@@ -1,18 +1,18 @@
 <template>
-  <div id="container">
-    <img src="~assets/logo.png" @click="home" />
-    <h3>Sign in to Talents</h3>
+  <div class="loginContainer">
+    <img src="~@img/logo.png" @click="home" />
+    <h3>{{title}}</h3>
     <el-card>
       <!-- 登录表单区域 -->
       <el-form
         ref="loginFormRef"
         :model="loginForm"
-        :rules="loginFormRules"
+        :rules="$rules.common"
         status-icon
         v-loading="loading"
       >
         <!-- 用户名 -->
-        <el-form-item prop="username">
+        <el-form-item prop="username" >
           <el-input
             v-model="loginForm.username"
             prefix-icon="el-icon-user"
@@ -29,8 +29,10 @@
             placeholder="请输入密码"
           ></el-input>
         </el-form-item>
+        <!-- 身份 -->
         <el-form-item>
-          <el-link type="primary" :underline="false">忘记密码</el-link>
+          <el-radio v-model="role" label="user">用户</el-radio>
+          <el-radio v-model="role" label="admin">管理员</el-radio>
         </el-form-item>
         <!-- 按钮区域 -->
         <el-form-item>
@@ -38,66 +40,22 @@
         </el-form-item>
       </el-form>
     </el-card>
-    <el-button @click="register">New to Talents? Creat an account.</el-button>
+    <el-button @click="register">{{msg}}</el-button>
   </div>
 </template>
 
 <script>
+import api from '@/api/api';
 export default {
   data() {
-    //验证用户名规则
-    const checkUsername = (rule, value, callback) => {
-      const regUsername = /^[A-Za-z]{1}[A-Za-z0-9]{2,9}/;
-      if (regUsername.test(value)) {
-        //合法用户名
-        return callback();
-      }
-      callback(new Error("需以字母开头，字母数字组合3~10长度"));
-    };
-    //验证密码
-    const validatePassword = (rule, value, callback) => {
-      const regPass = /^(?=.*[a-z])(?=.*[A-Z]).{8,15}$/;
-      if (!regPass.test(value)) {
-        //不合法密码
-        return callback(new Error("需包含大小写字母数字，8~15长度"));
-      }
-      return callback();
-    };
     return {
+      role: "user",
       loading: false,
+      title:'Sign in to Talents',
+      msg:'New to Talents? Creat an account.',
       loginForm: {
-        username: "test7",
+        username: "test1",
         password: "Guo123456",
-      },
-      loginFormRules: {
-        username: [
-          {
-            required: true,
-            message: "请输入用户名",
-            trigger: "blur",
-          },
-          {
-            min: 3,
-            max: 10,
-            message: "需以字母开头，字母数字组合3~10长度",
-            trigger: "blur",
-          },
-          {
-            validator: checkUsername,
-            trigger: "blur",
-          },
-        ],
-        password: [
-          {
-            required: true,
-            message: "请输入密码",
-            trigger: "blur",
-          },
-          {
-            validator: validatePassword,
-            trigger: "blur",
-          },
-        ],
       },
     };
   },
@@ -113,17 +71,16 @@ export default {
       this.$refs.loginFormRef.validate(async (valid) => {
         if (!valid) return;
         this.loading = !this.loading;
-        //可发起登录网络请求
-        const { data: res } = await this.$http.post(
-          "user/login",
-          this.loginForm
-        );
+        // 可发起登录网络请求
+        const res = await api.login(this.role,this.loginForm)
         this.loading = !this.loading;
-        // console.log(res);
-        if (!res) return;
-        this.$router.push("/index");
+        if (res.type === 'error') return;
         window.sessionStorage.setItem("token", res.token);
-        return this.$message.success(res.message);
+        this.$message.success(res.message);
+        if (this.role === "user") {
+          return this.$router.push("/userHome");
+        }
+        return this.$router.push("/index");
       });
     },
   },
@@ -137,24 +94,6 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
-#container {
-  text-align: center;
-  width: 350px;
-  margin: 30px auto;
-  img {
-    width: 70px;
-  }
-  .el-card {
-    padding: 30px 30px 0 30px;
-  }
-  .el-button {
-    width: 100%;
-    margin-top: 15px;
-  }
-  .el-link {
-    float: right;
-    top: -15px;
-  }
-}
+<style lang="scss" scoped>
+@import "@css/variable.scss";
 </style>

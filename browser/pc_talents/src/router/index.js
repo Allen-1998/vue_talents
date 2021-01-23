@@ -1,14 +1,14 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Register from "views/Register.vue";
-import Login from "views/Login.vue";
-import Index from "views/Index.vue";
-import NotFound from "views/404.vue";
+import Register from "@/views/Register.vue";
+import Login from "@/views/Login.vue";
+import Index from "@/views/Index.vue";
+import NotFound from "@/views/404.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
-  { path: "/", redirect: "/index" },
+  { path: "/", redirect: "/login" },
   {
     path: "/index",
     name: "Index",
@@ -41,7 +41,7 @@ router.beforeEach((to, from, next) => {
   //from 代表从哪个路径跳转来
   //next 一个函数，表示放行
   // next() 放行 next('/login') 强制跳转
-  if (to.path === "/login") return next();
+  if (to.path === '/index' || "/login") return next();
   if (to.path === "/register") return next();
   //获取token
   const tokenStr = window.sessionStorage.getItem("token");
