@@ -8,8 +8,6 @@ const UserSchema = new Schema({
   username: { type: String, require: true },
   //密码
   password: { type: String, require: true },
-  //昵称
-  nickname: { type: String, require: true },
   //身份：1->管理员，2->普通用户
   role: { type: Number, default: 2 },
   //状态：1->正常，0->禁用

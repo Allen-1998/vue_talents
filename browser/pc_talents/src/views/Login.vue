@@ -74,7 +74,7 @@ export default {
         // 可发起登录网络请求
         const res = await api.login(this.role,this.loginForm)
         this.loading = !this.loading;
-        if (res.type === 'error') return;
+        if (!res) return;
         window.sessionStorage.setItem("token", res.token);
         this.$message.success(res.message);
         if (this.role === "user") {
@@ -95,5 +95,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@css/variable.scss";
+// @import "@css/variable.scss";
 </style>

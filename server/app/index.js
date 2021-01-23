@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 //数据库
 const mongo = require("./config/db");
+
 const routers = require("./router/index");
 const app = new express();
 

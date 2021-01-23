@@ -21,9 +21,11 @@ axios.interceptors.response.use(
   },
   (err) => {
     if (!err.response) {
-      return Vue.prototype.$message.error('服务器未响应，请稍后再试！');
+      Vue.prototype.$message.error('服务器错误，请稍后再试！');
+    }else{
+      Vue.prototype.$message.error(err.response.data.message);
     }
-    return Vue.prototype.$message.error(err.response.data.message);
+     return
   }
 );
 
