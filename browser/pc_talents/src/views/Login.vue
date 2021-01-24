@@ -1,6 +1,9 @@
 <template>
   <div class="loginContainer">
-    <img src="~@img/logo.png" @click="home" />
+    <img
+      src="~@img/logo.png"
+      @click="home"
+    />
     <h3>{{title}}</h3>
     <el-card>
       <!-- 登录表单区域 -->
@@ -12,7 +15,7 @@
         v-loading="loading"
       >
         <!-- 用户名 -->
-        <el-form-item prop="username" >
+        <el-form-item prop="username">
           <el-input
             v-model="loginForm.username"
             prefix-icon="el-icon-user"
@@ -31,12 +34,21 @@
         </el-form-item>
         <!-- 身份 -->
         <el-form-item>
-          <el-radio v-model="role" label="user">用户</el-radio>
-          <el-radio v-model="role" label="admin">管理员</el-radio>
+          <el-radio
+            v-model="role"
+            label="user"
+          >用户</el-radio>
+          <el-radio
+            v-model="role"
+            label="admin"
+          >管理员</el-radio>
         </el-form-item>
         <!-- 按钮区域 -->
         <el-form-item>
-          <el-button type="success" @click="login">登录</el-button>
+          <el-button
+            type="success"
+            @click="login"
+          >登录</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -45,14 +57,14 @@
 </template>
 
 <script>
-import api from '@/api/api';
+import api from "@/api/api";
 export default {
   data() {
     return {
       role: "user",
       loading: false,
-      title:'Sign in to Talents',
-      msg:'New to Talents? Creat an account.',
+      title: "Sign in to Talents",
+      msg: "New to Talents? Creat an account.",
       loginForm: {
         username: "test1",
         password: "Guo123456",
@@ -72,7 +84,7 @@ export default {
         if (!valid) return;
         this.loading = !this.loading;
         // 可发起登录网络请求
-        const res = await api.login(this.role,this.loginForm)
+        const res = await api.login(this.role, this.loginForm);
         this.loading = !this.loading;
         if (!res) return;
         window.sessionStorage.setItem("token", res.token);
@@ -86,7 +98,7 @@ export default {
   },
   directives: {
     focus: {
-      inserted: function(el) {
+      inserted: function (el) {
         el.querySelector("input").focus();
       },
     },
@@ -95,5 +107,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// @import "@css/variable.scss";
+// style为空全局样式就不生效
 </style>

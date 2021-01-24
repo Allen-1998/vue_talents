@@ -1,6 +1,6 @@
 //用户路由
 const express = require("express");
-const role = require("../middleware/role");
+// const role = require("../middleware/role");
 const router = express.Router();
 const loginService = require("../service/loginService");
 const registerService = require("../service/registerService");
@@ -9,6 +9,16 @@ const registerService = require("../service/registerService");
 router.post("/login", async (req, res, next) => {
   try {
     const data = await loginService.findOne(req.body);
+    res.status(data.status).json(data)
+  } catch (err) {
+    return next(err);
+  }
+});
+
+//注册
+router.post("/register", async (req, res, next) => {
+  try {
+    const data = await registerService.findOne(req.body);
     res.status(data.status).json(data)
   } catch (err) {
     return next(err);
@@ -28,16 +38,6 @@ router.post("/login", async (req, res, next) => {
 //     return next(err);
 //   }
 // });
-
-//注册
-router.post("/register", async (req, res, next) => {
-  try {
-    const data = await registerService.findOne(req.body);
-    res.status(data.status).json(data)
-  } catch (err) {
-    return next(err);
-  }
-});
 
 //验证
 // router.post("/verify", async (req, res, next) => {});

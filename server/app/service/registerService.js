@@ -1,12 +1,13 @@
 const loginDao = require("../dao/loginDao");
 const { code } = require("../config/key");
+const registerUtil = require('../util/registerUtil')
 
 module.exports = {
   findOne: async (body) => {
     const user = await loginDao.findOne(body.username);
-    if (user) return { status: 422, message: "该用户已存在！" };
+    if (user) return registerUtil.USERNAME_ERR
     body.password = code(body.password);
     await loginDao.addOne(body);
-    return { status: 200, message: "注册成功！"};
+    return registerUtil.REGISTER_SUCCESS
   },
 };

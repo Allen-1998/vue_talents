@@ -106,5 +106,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// @import "@css/variable.scss";
+// style为空全局样式就不生效
 </style>
