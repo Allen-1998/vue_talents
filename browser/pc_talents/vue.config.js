@@ -7,7 +7,7 @@ module.exports = {
     //配置路径别名
     config.resolve.alias
       .set("@", resolve("src"))
-      .set("@css", resolve("src/assets/css"))
+      .set("@css", resolve("src/styles"))
       .set("@img", resolve("src/assets/img"))
   },
   //导入全局样式

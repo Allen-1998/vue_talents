@@ -64,10 +64,9 @@ export default {
       title: "Sign up to Talents",
       msg: "Return to login page.",
       addForm: {
-        username: "",
-        password: "",
-        rePassword: "",
-        nickName: "", // 昵称
+        username: "zzz",
+        password: "Guo123456",
+        rePassword: "Guo123456",
       },
     };
   },
@@ -90,7 +89,6 @@ export default {
         const res = await api.register(this.addForm);
         this.loading = !this.loading;
         if (!res) return;
-        this.$message.success(res.message);
         return this.$router.push("/login");
       });
     },

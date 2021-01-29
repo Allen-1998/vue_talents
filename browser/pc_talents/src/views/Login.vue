@@ -66,6 +66,7 @@ export default {
       title: "Sign in to Talents",
       msg: "New to Talents? Creat an account.",
       loginForm: {
+        //管理员为root
         username: "test1",
         password: "Guo123456",
       },
@@ -87,10 +88,10 @@ export default {
         const res = await api.login(this.role, this.loginForm);
         this.loading = !this.loading;
         if (!res) return;
-        window.sessionStorage.setItem("token", res.token);
-        this.$message.success(res.message);
+        this.$store.commit('SET_USER',res.data)
+        window.sessionStorage.setItem('token',res.token)
         if (this.role === "user") {
-          return this.$router.push("/userHome");
+          return this.$router.push("/home");
         }
         return this.$router.push("/index");
       });

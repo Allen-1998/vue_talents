@@ -1,0 +1,60 @@
+body {
+  margin: 0;
+}
+
+#app {
+    width: 100vw;
+    height: 100vh;
+    background: rgb(230, 230, 230);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex {
+  display: flex;
+  text-align: center;
+  align-items: center;
+}
+
+.ft18 {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.pd20 {
+  padding: 20px;
+}
+
+.pd40 {
+  padding: 40px;
+}
+
+.mr15 {
+  margin-right: 20px;
+}
+
+.bd {
+  border: 1px solid #fff;
+  box-shadow: 5px 5px 5px #999;
+  box-sizing: border-box;
+  border-radius: 35px;
+}
+
+.bg {
+  background: rgb(255, 255, 255);
+}
+
+.cl66 {
+  color: #666;
+}
+
+.cursor {
+  cursor: pointer;
+}
+
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
