@@ -3,7 +3,7 @@ const { code } = require("../config/key");
 const loginUtil = require('../util/loginUtil')
 
 module.exports = {
-  findOne: async body => {
+  findOne: async (body,url) => {
     const { username, password } = body;
     const user = await loginDao.findOne(username);
     if (!user)
@@ -12,6 +12,8 @@ module.exports = {
       return loginUtil.PASSWORD_ERR
     else if (user.status !== 1)
       return loginUtil.STATUS_ERR
+    else if (url === '/admin' && user.role === 2)
+      return loginUtil.ROLE_ERR
     return loginUtil.LOGIN_SUCCESS(user)
   },
 };

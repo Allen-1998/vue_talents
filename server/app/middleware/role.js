@@ -1,6 +1,8 @@
 const jwt = require("jsonwebtoken");
 const User = require("../model/User");
 const { secret } = require("../config/key");
+const roleUtil = require('../util/roleUtil')
+
 //验证身份中间件
 const role = async (req, res, next) => {
   try {
@@ -9,21 +11,10 @@ const role = async (req, res, next) => {
     const { _id, username } = jwt.verify(token, secret);
     //查询用户是否存在
     const user = await User.findById(_id);
-    if (!user)
-      return res.status(422).json({
-        status: 422,
-        message: "token验证失败！",
-      });
-    if (username !== user.username)
-      return res.status(422).json({
-        status: 422,
-        message: "token验证失败！",
-      });
+    if (!user || username !== user.username) 
+      return roleUtil.TOKEN_ERR
     if (user.role !== 1)
-      return res.status(409).json({
-        status: 409,
-        message: "没有权限！",
-      });
+      return roleUtil.ROLE_ERR
     return next();
   } catch (err) {
     return next(err);
