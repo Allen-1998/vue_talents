@@ -18,9 +18,9 @@ Object.keys(filters).forEach(key => {
 
 // 设置请求拦截
 axios.interceptors.request.use((config) => {
-    config.headers.Authorization = window.sessionStorage.getItem('token');
-    return config;
-  });
+  config.headers.Authorization = window.sessionStorage.getItem('token');
+  return config;
+});
   
 //设置响应拦截
 axios.interceptors.response.use(

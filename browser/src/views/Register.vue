@@ -10,7 +10,7 @@
       <el-form
         ref="addFormRef"
         :model="addForm"
-        :rules="$rules.common"
+        :rules="$rules.handle"
         status-icon
         v-loading="loading"
       >

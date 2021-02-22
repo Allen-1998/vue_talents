@@ -1,0 +1,30 @@
+@charset "UTF-8";
+
+.loginContainer {
+  text-align: center;
+  width: 350px;
+  img {
+    width: 70px;
+    border-radius: 50%;
+  }
+  .el-card {
+    padding: 30px 30px 0 30px;
+  }
+  .el-button {
+    width: 100%;
+    margin-top: 15px;
+  }
+  .el-radio {
+    margin-top: 14px;
+  }
+}
+
+.form-input {
+  width: 50%;
+}
+
+.form-radio {
+  margin-top: 12px;
+  margin-left: 10px;
+}
+
