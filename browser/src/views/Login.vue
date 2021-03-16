@@ -67,7 +67,7 @@ export default {
       msg: "New to Talents? Creat an account.",
       loginForm: {
         //管理员为root
-        username: "test1",
+        username: "xxx",
         password: "Guo123456",
       },
     };

@@ -10,6 +10,8 @@ import formRules from '@/utils/form-rules.js'
 Vue.prototype.$rules = formRules
 // global filters
 import * as filters from './filters' 
+//qs
+import qs from 'qs'
 
 // register global utility filters
 Object.keys(filters).forEach(key => {
@@ -18,6 +20,21 @@ Object.keys(filters).forEach(key => {
 
 // 设置请求拦截
 axios.interceptors.request.use((config) => {
+  const _id = store.state.user._id
+  //判断请求的类型：如果是post请求就把默认参数拼到data里面；如果是get请求就拼到params里面
+  if (_id) {
+    if(config.method==='post'){
+      config.data=({
+        _id,
+        ...config.data
+      })
+    }else if(config.method==='get'){
+      config.params=({
+        _id,
+        ...config.params
+      })
+    }
+  }
   config.headers.Authorization = window.sessionStorage.getItem('token');
   return config;
 });
@@ -25,7 +42,9 @@ axios.interceptors.request.use((config) => {
 //设置响应拦截
 axios.interceptors.response.use(
   (res) => {
-    Vue.prototype.$message.success(res.data.message);
+    if (res.data.message) {
+      Vue.prototype.$message.success(res.data.message);
+    }
     return res.data;
   },
   (err) => {

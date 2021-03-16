@@ -16,6 +16,9 @@ const store = new Vuex.Store({
         },
         RESET(state){
             state.user = {}
+        },
+        UPDATE_USER(state,data){
+            Object.assign(state.user,data)
         }
     }
 })

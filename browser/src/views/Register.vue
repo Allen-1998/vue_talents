@@ -67,6 +67,7 @@ export default {
         username: "zzz",
         password: "Guo123456",
         rePassword: "Guo123456",
+        date:Number(new Date())
       },
     };
   },

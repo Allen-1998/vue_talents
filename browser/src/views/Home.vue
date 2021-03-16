@@ -10,7 +10,7 @@
         <el-col
           :span="3"
           class="ellipsis"
-        >hi,{{user.username}}</el-col>
+        >hi,{{user.nickname||user.username}}</el-col>
         <el-col :span="3">
           <el-button
             type="info"
@@ -28,20 +28,20 @@
       <label for="toggler">
         <div class="menu-icon cursor"></div>
       </label>
-      <div class="aside bd bg mr15">
+      <div class="aside bd bg mr20">
         <Menu :menuList="menuList"></Menu>
       </div>
       <div class="main bd bg pd40">
-        <Breadcrumb></Breadcrumb>
-        <router-view></router-view>
+        <Breadcrumb class="pd10"></Breadcrumb>
+        <router-view class="router-view"></router-view>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Menu from "@/components/menu.vue";
-import Breadcrumb from "@/components/breadcrumb.vue";
+import Menu from "@/components/Menu.vue";
+import Breadcrumb from "@/components/Breadcrumb.vue";
 export default {
   components: {
     Menu,
@@ -50,7 +50,6 @@ export default {
   data() {
     return {
       title: "人才信息管理系统",
-      user: this.$store.state.user,
       menuList: [
         {
           id: "1",
@@ -94,6 +93,11 @@ export default {
       ],
     };
   },
+  computed:{
+    user(){
+      return this.$store.state.user
+    }
+  },
   methods: {
     async logout() {
       //弹框询问用户是否退出
@@ -105,7 +109,7 @@ export default {
       //如果用户确认,则返回值为字符串confirm
       //如果用户取消，则返回值为字符串cancel
       if (confirmResult === "confirm") {
-        window.sessionStorage.removeItem("token");
+        window.sessionStorage.clear()
         this.$store.commit("RESET");
         this.$router.push("login");
       }
@@ -147,6 +151,9 @@ export default {
 .main {
   width: calc(100% - 200px);
   height: 100%;
+  .router-view{
+    height: 100%;
+  }
 }
 
 #toggler {

@@ -18,7 +18,7 @@ const validateRePassword = (rule, value, callback) => {
 };
 // 手机号码验证
 const validatePhone = (rule, value, callback) => {
-  const reg = /^0{0,1}(13[0-9]|15[7-9]|153|156|18[7-9])[0-9]{8}$/;
+  const reg = /^1[0-9]{10}$/;
   if (reg.test(value)) return callback();
   callback(new Error("请输入正确格式的手机号"));
 };
@@ -31,7 +31,7 @@ const validateIdCardNo = (rule, value, callback) => {
 // 邮箱
 const validateEmail = (rule, value, callback) => {
   const reg = /(^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$)/;
-  if (reg.test(value)) return callback();
+  if (reg.test(value)||value==='') return callback();
   callback(new Error("请输入正确格式的邮箱地址"));
 };
 
@@ -44,6 +44,8 @@ export default {
     email: validateEmail,
     //身份证号
     idCardNo: validateIdCardNo,
+    //家庭电话
+    homePhone: validatePhone,
   },
   handle: {
     // ---------------------处理表单的验证方法
@@ -72,6 +74,18 @@ export default {
       },
     ],
     rePassword: [
+      {
+        // 密码
+        required: true,
+        message: "密码不能为空",
+        trigger: "blur",
+      },
+      {
+        validator: validateRePassword,
+        trigger: "blur",
+      },
+    ],
+    oldPassword: [
       {
         // 密码
         required: true,

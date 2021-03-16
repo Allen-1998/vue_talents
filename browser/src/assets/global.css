@@ -27,6 +27,10 @@ body {
   font-weight: bold;
 }
 
+.pd10{
+  padding: 10px;
+}
+
 .pd20 {
   padding: 20px;
 }
@@ -35,12 +39,28 @@ body {
   padding: 40px;
 }
 
+.pd040{
+  padding: 0 40px;
+}
+
 .mt15{
   margin-top: 15px;
 }
 
-.mr15 {
+.mr20 {
   margin-right: 20px;
+}
+
+.mb20{
+  margin-bottom: 20px;
+}
+
+.ml50{
+  margin-left: 50px;
+}
+
+.bs{
+  box-sizing: border-box;
 }
 
 .fl{

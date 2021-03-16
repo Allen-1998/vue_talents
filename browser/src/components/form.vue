@@ -7,27 +7,54 @@
       status-icon
     >
       <el-form-item
-        v-for="(item,index) in formList"
+        v-for="(item, index) in formList"
         :key="index"
         :label="item.label"
         :prop="item.prop"
         :rules="[
-            {required: item.required , message: `${item.label}不能为空`,trigger: 'blur'},
-            {type:item.type === 'date' ? 'date' : (item.type === 'daterange' ? 'array' : 'string'),
-            validator:$rules.common[item.prop],trigger: 'blur'}]"
+          {
+            required: item.required,
+            message: `${item.label}不能为空`,
+            trigger: 'blur',
+          },
+          {
+            type:
+              item.type === 'date'
+                ? 'date'
+                : item.type === 'daterange'
+                ? 'array'
+                : 'string',
+            validator: $rules.common[item.prop],
+            trigger: 'blur',
+          },
+        ]"
       >
         <el-input
           class="form-input fl"
           v-model="item[item.prop]"
           v-if="item.type === 'input'"
+          :disabled="item.disabled"
+          :placeholder="item.placeholder"
         ></el-input>
+        <el-input
+          class="form-input fl"
+          type="textarea"
+          :rows="3"
+          maxlength="50"
+          show-word-limit
+          resize="none"
+          v-else-if="item.type === 'textarea'"
+          :placeholder="item.placeholder"
+          v-model="item[item.prop]"
+        >
+        </el-input>
         <el-radio-group
           class="form-radio fl"
           v-model="item[item.prop]"
           v-else-if="item.type === 'radio'"
         >
-          <el-radio label="1">{{'1'| formatRadio(item.prop) }}</el-radio>
-          <el-radio label="0">{{'0'| formatRadio(item.prop) }}</el-radio>
+          <el-radio label="1">{{ "1" | formatRadio(item.prop) }}</el-radio>
+          <el-radio label="0">{{ "0" | formatRadio(item.prop) }}</el-radio>
         </el-radio-group>
         <el-date-picker
           class="fl"
@@ -63,11 +90,11 @@ export default {
   props: {
     formList: {
       type: Array,
-      default: ()=> [],
+      default: () => [],
     },
     formObj: {
       type: Object,
-      default: ()=> {},
+      default: () => ({}),
     },
   },
   data() {

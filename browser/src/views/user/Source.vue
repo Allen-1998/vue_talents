@@ -1,71 +1,57 @@
 <template>
   <div class="Source">
-    <Step
-      :stepList="stepList"
-      :active='active'
-    ></Step>
-    <Tab
-      ref="tab"
-      :stepList="stepList"
-      :active='active'
-      :formList='formList'
-      :formObj='formObj'
-    ></Tab>
-    <el-button @click="next">{{ active!=='3' ? '下一步' : '完成' }}</el-button>
+    <Committed v-if="isCommit" :list="list"></Committed>
+    <UnCommitted :stepList="stepList" :formList="formList" v-else></UnCommitted>
   </div>
 </template>
 
 <script>
-import Step from "@/components/step.vue";
-import Tab from "@/components/tab.vue";
+import Committed from "@/components/Committed";
+import UnCommitted from "@/components//UnCommitted";
+import api from "@/api/api";
 export default {
   components: {
-    Step,
-    Tab,
+    Committed,
+    UnCommitted,
   },
   data() {
     return {
-      active: "0",
-      stepList: [
+      //是否已经填写
+      isCommit: false,
+      //数据列表
+      list: {},
+      //标签页
+      stepList: [],
+      //表单列表
+      formList:[]
+    };
+  },
+  methods: {
+    //判断是否已提交
+    async getList() {
+      const res = await api.findSource();
+      if (!res) return;
+      console.log(res);
+      if (res.data) {
+        this.list = res.data;
+        this.isCommit = true;
+      }else{
+        this.getStepList()
+        this.getFromList('0')
+      }
+    },
+    //获取标签页
+    getStepList() {
+      this.stepList = [
         { id: "0", val: "基本信息" },
         { id: "1", val: "学籍信息" },
         { id: "2", val: "联系方式" },
         { id: "3", val: "档案信息" },
-      ],
-      //表单列表
-      formList: [],
-      //要提交的表单对象
-      formData: {},
-    };
-  },
-  computed: {
-    formObj() {
-      let obj = {};
-      this.formList.forEach((i) => {
-        obj[i.prop] = i[i.prop];
-      });
-      return obj;
+      ];
     },
-  },
-  methods: {
-    //下一步
-    next() {
-      this.$refs.tab.$refs.form[this.active * 1].$refs.addFormRef.validate(
-        async (valid) => {
-          if (!valid) return;
-          Object.assign(this.formData, this.formObj);
-          if (this.active !== '3') {
-            this.active = this.active * 1 + 1 + "";
-            this.getFromList();
-          }else{
-            console.log(this.formData);
-          }
-        }
-      );
-    },
-    //获取列表
-    getFromList() {
-      switch (this.active) {
+    //获取表单列表
+    getFromList(i) {
+      switch (i) {
         case "0":
           this.formList = [
             {
@@ -189,7 +175,6 @@ export default {
               prop: "trainingMode",
               trainingMode: "",
               type: "input",
-              required: false,
             },
           ];
           break;
@@ -207,14 +192,12 @@ export default {
               prop: "qq",
               qq: "",
               type: "input",
-              required: false,
             },
             {
               label: "微信",
               prop: "wx",
               wx: "",
               type: "input",
-              required: false,
             },
             {
               label: "电子邮箱",
@@ -232,8 +215,8 @@ export default {
             },
             {
               label: "家庭电话",
-              prop: "phone",
-              phone: "",
+              prop: "homePhone",
+              homePhone: "",
               type: "input",
               required: true,
             },
@@ -249,7 +232,6 @@ export default {
               prop: "postcode",
               postcode: "",
               type: "input",
-              required: false,
             },
           ];
           break;
@@ -290,17 +272,20 @@ export default {
           break;
       }
     },
+    //提交表单
+    async save(data){
+      const res = await api.saveSource(data);
+      if (!res) return;
+      console.log(data);
+    }
   },
   created() {
-    this.getFromList();
+    this.getList();
   },
 };
 </script>
 <style lang="scss" scoped>
 .Source {
   height: 100%;
-}
-.el-button {
-  margin-top: 15px;
 }
 </style>

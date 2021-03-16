@@ -1,24 +1,26 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-const Login = () => import( /* webpackChunkName: "login_register" */ "@/views/Login.vue" );
-const Register = () => import( /* webpackChunkName: "login_register" */ "@/views/Register.vue" );
-const Index = () => import( /* webpackChunkName: "index" */ "@/views/Index.vue" );
-const NotFound = () => import( /* webpackChunkName: "notfound" */ "@/views/404.vue" );
+const Login = () => import( /* webpackChunkName: "login_register" */ "@/views/Login.vue");
+const Register = () => import( /* webpackChunkName: "login_register" */ "@/views/Register.vue");
+const Index = () => import( /* webpackChunkName: "index" */ "@/views/Index.vue");
+const NotFound = () => import( /* webpackChunkName: "notfound" */ "@/views/404.vue");
 
-const Home = () => import( /* webpackChunkName: "home_welcome" */ "@/views/Home.vue" );
-const Welcome = () => import( /* webpackChunkName: "home_welcome" */ "@/views/Welcome.vue" );
+const Home = () => import( /* webpackChunkName: "home_welcome" */ "@/views/Home.vue");
+const WelCome = () => import( /* webpackChunkName: "home_welcome" */ "@/views/WelCome.vue");
 
-const Source = () => import( /* webpackChunkName: "source_job_resume" */ "@/views/user/Source.vue" );
-const Job = () => import( /* webpackChunkName: "source_job_resume" */ "@/views/user/Job.vue" );
-const Resume = () => import( /* webpackChunkName: "source_job_resume" */ "@/views/user/Resume.vue" );
+const Source = () => import( /* webpackChunkName: "source_job_resume" */ "@/views/user/Source.vue");
+const Job = () => import( /* webpackChunkName: "source_job_resume" */ "@/views/user/Job.vue");
+const Resume = () => import( /* webpackChunkName: "source_job_resume" */ "@/views/user/Resume.vue");
 
-const Profile = () => import( /* webpackChunkName: "profile_admin" */ "@/views/user/Profile.vue" );
-const Admin = () => import( /* webpackChunkName: "profile_admin" */ "@/views/user/Admin.vue" );
+const Profile = () => import( /* webpackChunkName: "profile_admin" */ "@/views/user/Profile.vue");
+const Admin = () => import( /* webpackChunkName: "profile_admin" */ "@/views/user/Admin.vue");
 
 Vue.use(VueRouter);
 
-const routes = [
-  { path: "/", redirect: "/login" },
+const routes = [{
+    path: "/",
+    redirect: "/login"
+  },
   {
     path: "/index",
     component: Index,
@@ -35,13 +37,53 @@ const routes = [
     path: "/home",
     component: Home,
     redirect: "/welcome",
-    children: [
-      { path: "/welcome", component: Welcome, meta:{ title:'首页' } },
-      { path: "/source", component: Source, meta:{ parentTitle:'就业事务', childTitle:'生源信息' } },
-      { path: "/job", component: Job, meta:{ parentTitle:'就业事务', childTitle:'就业信息' } },
-      { path: "/resume", component: Resume, meta:{ parentTitle:'就业事务', childTitle:'简历管理' } },
-      { path: "/profile", component: Profile, meta:{ parentTitle:'个人中心', childTitle:'个人资料' } },
-      { path: "/admin", component: Admin, meta:{ parentTitle:'个人中心', childTitle:'密码管理' } },
+    children: [{
+        path: "/welcome",
+        component: WelCome,
+        meta: {
+          title: '首页'
+        }
+      },
+      {
+        path: "/source",
+        component: Source,
+        meta: {
+          parentTitle: '就业事务',
+          childTitle: '生源信息'
+        }
+      },
+      {
+        path: "/job",
+        component: Job,
+        meta: {
+          parentTitle: '就业事务',
+          childTitle: '就业信息'
+        }
+      },
+      {
+        path: "/resume",
+        component: Resume,
+        meta: {
+          parentTitle: '就业事务',
+          childTitle: '简历管理'
+        }
+      },
+      {
+        path: "/profile",
+        component: Profile,
+        meta: {
+          parentTitle: '个人中心',
+          childTitle: '个人资料'
+        }
+      },
+      {
+        path: "/admin",
+        component: Admin,
+        meta: {
+          parentTitle: '个人中心',
+          childTitle: '密码管理'
+        }
+      },
     ]
   },
   {
