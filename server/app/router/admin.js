@@ -1,12 +1,12 @@
-//管理员路由
+//用户路由
 const express = require("express");
 const router = express.Router();
-const loginService = require("../service/loginService");
+const userService = require('../service/userService')
 
 //登录
-router.post("/login", async (req, res, next) => {
+router.post("/login",async (req, res, next) => {
   try {
-    const data = await loginService.findOne(req.body,req.baseUrl);
+    const data = await userService.findOne(req.body,req.url);
     res.status(data.status).json(data)
   } catch (err) {
     return next(err);

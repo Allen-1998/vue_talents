@@ -12,12 +12,16 @@ const UserSchema = new Schema({
   role: { type: Number, default: 2 },
   //状态：1->正常，0->禁用
   status: { type: Number, default: 1 },
+  //性别 1->男，0->女
+  sex: { type: String, default: '1' },
   //注册日期
   date:{ type: Number, default: new Date() },
   //昵称
   nickname:{ type: String, default: '' },
   //电子邮箱
   email:{ type: String, default: '' },
+  //简介
+  introduction:{ type: String, default: '' },
 });
 
 const User = model("User", UserSchema);

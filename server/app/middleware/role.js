@@ -7,14 +7,19 @@ const roleUtil = require('../util/roleUtil')
 const role = async (req, res, next) => {
   try {
     //获取token
-    const token = req.headers.authorization.split(" ").pop();
+    const token = req.headers.authorization.split(" ").pop()
     const { _id, username } = jwt.verify(token, secret);
     //查询用户是否存在
     const user = await User.findById(_id);
-    if (!user || username !== user.username) 
-      return roleUtil.TOKEN_ERR
-    if (user.role !== 1)
-      return roleUtil.ROLE_ERR
+    // console.log(user);
+    if (!user || username !== user.username) {
+      const  data = roleUtil.TOKEN_ERR
+      return res.status(data.status).json(data)
+    }
+    // if (user.role !== 1){
+    //   const  data = roleUtil.ROLE_ERR
+    //   return res.status(data.status).json(data)
+    // }
     return next();
   } catch (err) {
     return next(err);

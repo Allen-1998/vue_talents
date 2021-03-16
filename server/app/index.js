@@ -12,12 +12,13 @@ const app = new express();
 
 mongo(app);
 app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({limit:'10mb'}));
+app.use(bodyParser.urlencoded({ limit:'10mb',extended: true }));
 routers(app);
 
 //处理错误请求
 app.use((err, req, res, next) => {
+  console.log(err);
   return res.status(500).json({
     status: 500,
     message: "服务器错误，请稍后再试！",
