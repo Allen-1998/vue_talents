@@ -50,52 +50,14 @@ export default {
   data() {
     return {
       title: "人才信息管理系统",
-      menuList: [
-        {
-          id: "1",
-          name: "就业事务",
-          icon: "el-icon-menu",
-          child: [
-            {
-              id: "source",
-              name: "生源信息",
-              icon: "el-icon-s-custom",
-            },
-            {
-              id: "job",
-              name: "就业信息",
-              icon: "el-icon-s-cooperation",
-            },
-            {
-              id: "resume",
-              name: "简历管理",
-              icon: "el-icon-s-order",
-            },
-          ],
-        },
-        {
-          id: "2",
-          name: "个人中心",
-          icon: "el-icon-menu",
-          child: [
-            {
-              id: "profile",
-              name: "个人资料",
-              icon: "el-icon-s-custom",
-            },
-            {
-              id: "admin",
-              name: "密码管理",
-              icon: "el-icon-s-goods",
-            },
-          ],
-        },
-      ],
     };
   },
   computed:{
     user(){
       return this.$store.state.user
+    },
+    menuList(){
+      return this.$store.state.menuList
     }
   },
   methods: {

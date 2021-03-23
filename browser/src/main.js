@@ -10,13 +10,14 @@ import formRules from '@/utils/form-rules.js'
 Vue.prototype.$rules = formRules
 // global filters
 import * as filters from './filters' 
-//qs
-import qs from 'qs'
 
 // register global utility filters
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
 })
+
+//配置默认请求头
+axios.defaults.baseURL = "http://localhost:3000/";
 
 // 设置请求拦截
 axios.interceptors.request.use((config) => {

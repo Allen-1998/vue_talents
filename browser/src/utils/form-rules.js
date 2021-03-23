@@ -19,7 +19,7 @@ const validateRePassword = (rule, value, callback) => {
 // 手机号码验证
 const validatePhone = (rule, value, callback) => {
   const reg = /^1[0-9]{10}$/;
-  if (reg.test(value)) return callback();
+  if (reg.test(value)||value==='') return callback();
   callback(new Error("请输入正确格式的手机号"));
 };
 // 身份证号
@@ -46,6 +46,12 @@ export default {
     idCardNo: validateIdCardNo,
     //家庭电话
     homePhone: validatePhone,
+    //联系人电话
+    companyNumber: validatePhone,
+    //联系人email
+    companyEmail: validateEmail,
+    //转寄单位电话
+    recordUnitPhone: validatePhone,
   },
   handle: {
     // ---------------------处理表单的验证方法

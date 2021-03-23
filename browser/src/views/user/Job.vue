@@ -137,6 +137,7 @@ export default {
               prop: "certificateTime",
               certificateTime: "",
               type: "date",
+              required: true,
             },
             {
               label: "签往单位名称",

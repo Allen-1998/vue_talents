@@ -10,7 +10,7 @@ module.exports = {
     return crudUtil.SAVE_SUCCESS
   },
   findById: async (id) => {
-    const res = await jobDao.findById(id);
+    const res = await jobDao.findOne(id);
     if(!res) return crudUtil.FIND_ERR
     return crudUtil.FIND_SUCCESS(res)
   },

@@ -1,6 +1,6 @@
 //路由管理
+const homeRouter = require("./home");
 const userRouter = require("./user");
-const adminRouter = require("./admin");
 const sourceRouter = require("./source");
 const jobRouter = require("./job");
 const resumeRouter = require("./resume");
@@ -8,9 +8,10 @@ const resumeRouter = require("./resume");
 const role = require("../middleware/role");
 
 module.exports = (app) => {
+  app.use("/home", homeRouter);
+  app.use(role)
   app.use("/user", userRouter);
-  app.use('/source', role, sourceRouter)
-  app.use('/job', role, jobRouter)
-  app.use('/resume', role, resumeRouter)
-  app.use("/admin", adminRouter);
+  app.use('/source', sourceRouter)
+  app.use('/job', jobRouter)
+  app.use('/resume', resumeRouter)
 };

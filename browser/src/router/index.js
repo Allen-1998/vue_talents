@@ -15,6 +15,11 @@ const Resume = () => import( /* webpackChunkName: "source_job_resume" */ "@/view
 const Profile = () => import( /* webpackChunkName: "profile_admin" */ "@/views/user/Profile.vue");
 const Admin = () => import( /* webpackChunkName: "profile_admin" */ "@/views/user/Admin.vue");
 
+const Users = () => import( /* webpackChunkName: "users" */ "@/views/admin/Users.vue");
+
+const Backlog = () => import( /* webpackChunkName: "backlog_log" */ "@/views/admin/Backlog.vue");
+const Log = () => import( /* webpackChunkName: "backlog_log" */ "@/views/admin/Log.vue");
+
 Vue.use(VueRouter);
 
 const routes = [{
@@ -84,10 +89,38 @@ const routes = [{
           childTitle: '密码管理'
         }
       },
+      {
+        path: "/users",
+        component: Users,
+        meta: {
+          parentTitle: '人员管理',
+          childTitle: '用户列表'
+        }
+      },
+      {
+        path: "/backlog",
+        component: Backlog,
+        meta: {
+          parentTitle: '信息管理',
+          childTitle: '待办列表'
+        }
+      },
+      {
+        path: "/log",
+        component: Log,
+        meta: {
+          parentTitle: '信息管理',
+          childTitle: '审批记录'
+        }
+      },
     ]
   },
   {
     path: "*",
+    redirect: "/404",
+  },
+  {
+    path: "/404",
     component: NotFound,
   },
 ];
@@ -100,17 +133,18 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   //to 将要访问的路径
   //from 代表从哪个路径跳转来
-  //next 一个函数，表示放行
   // next() 放行 next('/login') 强制跳转
   const arr = [
+    '/',
     "/login",
-    "/register"
+    "/register",
+    '/404'
   ]
   //判断目标路由是否在放行数组中
   if (arr.includes(to.path)) return next();
   //获取token
   const token = window.sessionStorage.getItem('token')
-  if (token === '') {
+  if (!token) {
     Vue.prototype.$message.warning("请先登录再进行此操作！");
     return next("/login");
   }

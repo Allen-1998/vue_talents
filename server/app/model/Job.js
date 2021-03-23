@@ -31,9 +31,9 @@ const JobSchema = new Schema({
     //报到证编号
     certificateNo:{ type: String, default: '' },
     //报到证起始时间
-    certificateTime:{ type: Number, default: '' },
+    certificateTime:{ type: Number, require: true },
     //签往单位名称
-    certificateUnit:{ type: Array, require: true },
+    certificateUnit:{ type: String, require: true },
     //签往单位所在地
     certificateUnitLocation:{ type: String, require: true },
     //签往单位地址

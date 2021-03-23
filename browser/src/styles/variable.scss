@@ -28,3 +28,39 @@
   margin-left: 10px;
 }
 
+
+.message-list {
+  padding: 20px 0;
+  text-align: left;
+  &:not(:last-child){
+    border-bottom: 2px dotted #6ea6df;
+  }
+  .list-title {
+    color: #409EFF;
+    padding-left:15px;
+    margin-bottom: 15px;
+    border-left: 3px solid #409EFF;
+    font-size: 18px;
+  }
+  .list-item{
+    display: inline-block;
+    width: 50%;
+    line-height: 30px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .list-label{
+    color: #666;
+  }
+}
+
+.message-status{
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  .status-img{
+    width: 100px;
+    height: 100px;
+  }
+}

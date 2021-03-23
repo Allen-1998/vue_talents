@@ -4,24 +4,32 @@
   </div>
 </template>
 <script>
-  export default {
-    created(){
-       //在页面加载时读取sessionStorage里的状态信息
-      if (sessionStorage.getItem("store")) {
-        this.$store.replaceState(
-          Object.assign(
-            {},
-            this.$store.state,
-            JSON.parse(sessionStorage.getItem("store"))
-          )
-        );
-      }
-      //在页面刷新时将vuex里的信息保存到sessionStorage里
-      window.addEventListener("beforeunload", () => {
-        sessionStorage.setItem("store", JSON.stringify(this.$store.state));
-      });
+export default {
+  created() {
+    //在页面加载时读取sessionStorage里的状态信息
+    if (sessionStorage.getItem("store")) {
+      this.$store.replaceState(
+        Object.assign(
+          {},
+          this.$store.state,
+          JSON.parse(sessionStorage.getItem("store"))
+        )
+      );
+      sessionStorage.removeItem('store')
     }
-  }
+    //在页面刷新时将vuex里的信息保存到sessionStorage里
+    window.addEventListener("beforeunload", () => {
+      sessionStorage.setItem("store", JSON.stringify(this.$store.state));
+    });
+  },
+  watch: {
+    "$route.path"(val) {
+      if (!this.$store.state.menus.includes(val.slice(1))) {
+        this.$message.warning("没有权限！");
+        this.$router.go(-1);
+      }
+    },
+  },
+};
 </script>
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

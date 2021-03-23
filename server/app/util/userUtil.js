@@ -8,6 +8,8 @@ module.exports = {
   ROLE_ERR: { status: 408, message: "身份验证失败！" },
   USERNAME_ERR : { status: 422, message: "该用户已存在！" },
   REGISTER_SUCCESS : { status: 200, message: "注册成功！"},
+  UPDATE_ERR : { status: 422, message: "修改失败！"},
+  UPDATE_SUCCESS : { status: 200, message: "修改成功！"},
   LOGIN_SUCCESS: (data) => {
     const { _id, username } = data;
     const token = jwt.sign({ _id, username }, secret, { expiresIn: "24h" });
@@ -17,5 +19,11 @@ module.exports = {
       token,
       data,
     };
+  },
+  FIND_SUCCESS: (data) =>{
+    return{
+      status:200,
+      data,
+    }
   },
 };

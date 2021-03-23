@@ -9,7 +9,7 @@ const UserSchema = new Schema({
   //密码
   password: { type: String, require: true },
   //身份：1->管理员，2->普通用户
-  role: { type: Number, default: 2 },
+  role: { type: String, default: '2' },
   //状态：1->正常，0->禁用
   status: { type: Number, default: 1 },
   //性别 1->男，0->女
@@ -21,7 +21,7 @@ const UserSchema = new Schema({
   //电子邮箱
   email:{ type: String, default: '' },
   //简介
-  introduction:{ type: String, default: '' },
+  introduction:{ type: String, default: '这个人太懒了，什么也没有写...' },
 });
 
 const User = model("User", UserSchema);

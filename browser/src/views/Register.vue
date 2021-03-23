@@ -13,6 +13,7 @@
         :rules="$rules.handle"
         status-icon
         v-loading="loading"
+        @keyup.enter.native="register"
       >
         <!-- 用户名 -->
         <el-form-item prop="username">

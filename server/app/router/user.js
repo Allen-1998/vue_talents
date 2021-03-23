@@ -3,30 +3,9 @@ const express = require("express");
 const router = express.Router();
 const userService = require('../service/userService')
 const { code } = require("../config/key");
-const role = require("../middleware/role");
-
-//登录
-router.post("/login",async (req, res, next) => {
-  try {
-    const data = await userService.findOne(req.body,req.url);
-    res.status(data.status).json(data)
-  } catch (err) {
-    return next(err);
-  }
-});
-
-//注册
-router.post("/register", async (req, res, next) => {
-  try {
-    const data = await userService.save(req.body);
-    res.status(data.status).json(data)
-  } catch (err) {
-    return next(err);
-  }
-});
 
 //个人资料修改
-router.post("/updateProfile",role, async (req, res, next) => {
+router.post("/updateProfile", async (req, res, next) => {
   try {
     const data = await userService.findByIdAndUpdate(req.body);
     res.status(data.status).json(data)
@@ -36,7 +15,7 @@ router.post("/updateProfile",role, async (req, res, next) => {
 });
 
 //密码修改
-router.post("/updateAdmin",role, async (req, res, next) => {
+router.post("/updateAdmin", async (req, res, next) => {
   try {
     let { _id,oldPassword,password} = req.body;
     let data = await userService.findById(_id,oldPassword);
@@ -44,6 +23,27 @@ router.post("/updateAdmin",role, async (req, res, next) => {
       password = code(password)
       data = await userService.findByIdAndUpdate({_id,password});
     }
+    res.status(data.status).json(data)
+  } catch (err) {
+    return next(err);
+  }
+});
+
+//获取用户列表
+router.post("/getUsers", async (req, res, next) => {
+  try {
+    const data = await userService.findUsers(req.body);
+    res.status(data.status).json(data)
+  } catch (err) {
+    return next(err);
+  }
+});
+
+//修改用户状态
+router.post("/changeStatus", async (req, res, next) => {
+  try {
+    const { id:_id,status} = req.body;
+    const data = await userService.findByIdAndUpdate({_id,status});
     res.status(data.status).json(data)
   } catch (err) {
     return next(err);

@@ -1,13 +1,14 @@
 <template>
-  <div class="admin pd20">
+  <div class="admin pd20 bs">
     <el-form
       ref="addFormRef"
       :model="addForm"
       :rules="$rules.handle"
+      label-width="100px"
       status-icon
     >
       <!-- 旧密码 -->
-      <el-form-item prop="oldPassword">
+      <el-form-item prop="oldPassword" label="密码">
         <el-input
           v-model="addForm.oldPassword"
           prefix-icon="el-icon-lock"
@@ -16,7 +17,7 @@
         ></el-input>
       </el-form-item>
       <!-- 新密码 -->
-      <el-form-item prop="password">
+      <el-form-item prop="password" label="新密码">
         <el-input
           v-model="addForm.password"
           prefix-icon="el-icon-lock"
@@ -25,7 +26,7 @@
         ></el-input>
       </el-form-item>
       <!-- 二次验证密码 -->
-      <el-form-item prop="rePassword">
+      <el-form-item prop="rePassword" label="重复密码">
         <el-input
           type="password"
           v-model="addForm.rePassword"
@@ -85,6 +86,10 @@ export default {
 
 <style lang="scss" scoped>
 .admin {
-  width: 40%;
+  height: 100%;
+  overflow: auto;
+  .el-form-item{
+    width: 40%;
+  }
 }
 </style>

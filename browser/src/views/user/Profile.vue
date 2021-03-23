@@ -1,5 +1,5 @@
 <template>
-  <div class="Profile">
+  <div class="Profile bs">
     <Form ref="form" :formList="formList" :formObj="formObj"></Form>
     <div class="Profile-btn">
       <el-button type="primary" @click="save">保存</el-button>
@@ -98,6 +98,8 @@ export default {
 <style lang="scss" scoped>
 .Profile {
   padding: 20px 0;
+  height: 100%;
+  overflow: auto;
   .Profile-btn {
     margin-left: 150px;
     width: 50%;

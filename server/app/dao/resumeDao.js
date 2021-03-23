@@ -1,7 +1,7 @@
 const Resume = require("../model/Resume");
 
 module.exports = {
-    save : async date => new Resume(date).save(),
-    findOne : async userId => Resume.findOne ({userId}),
-    findByIdAndUpdate : async (_id,date) => Resume.findByIdAndUpdate(_id,date),
-}
+  save: (date) => new Resume(date).save(),
+  findOne: (userId) => Resume.findOne({ userId }),
+  findByIdAndUpdate: (_id, date) => Resume.findByIdAndUpdate(_id, date),
+};

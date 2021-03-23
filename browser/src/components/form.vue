@@ -20,7 +20,7 @@
           {
             type:
               item.type === 'date'
-                ? 'date'
+                ? 'number'
                 : item.type === 'daterange'
                 ? 'array'
                 : 'string',

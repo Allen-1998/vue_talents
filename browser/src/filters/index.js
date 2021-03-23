@@ -13,6 +13,13 @@ export function formatSecond(val) {
     return moment(val).format("YYYY-MM-DD HH:mm:ss");
 }
 
+export function formatDates(arr) {
+    const start = moment(arr[0]).format("YYYY-MM-DD");
+    const end = moment(arr[1]).format("YYYY-MM-DD");
+    return `${start} 至 ${end}`;
+}
+
+
 //单选框过滤
 export function formatRadio(val, prop) {
     switch (prop) {
